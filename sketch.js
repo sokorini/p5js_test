@@ -10,7 +10,7 @@ function setup() {
 
 
 function cb(){
-  let btn = createButton("huh?");
+  let btn = createButton("hehe?");
   btn.position(40,40);
   openSMS("01052293829","please....");
 }
