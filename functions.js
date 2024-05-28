@@ -5,7 +5,7 @@ function openSMS(ph, str){
   if(navigator.userAgent.match(/Android/i)){
     window.open('sms://'+ph+'/?body='+str);
   }
-  if(navigator.userAgent.match(/iPhone/i)){
+  if(navigator.userAgent.match(/iPad/i)){
     window.open('sms://01052293829/?body='+str);
   }
 }
