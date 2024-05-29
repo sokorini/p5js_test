@@ -17,7 +17,16 @@ function setup() {
   addItem.mousePressed(addItemCB);
 
   listView = new ListView(0, HPerC(10), WPerC(100), HPerC(40));
-  listView.add(new lstItem("대파", "단", "원재료"));
+  
+  for(let i = 0 ; i < 10 ; i++){
+    listView.add(new lstItem("원재료"+i, "개", "원재료"));
+  }
+  for(let i = 0 ; i < 10 ; i++){
+    listView.add(new lstItem("비품"+i, "개", "비품"));
+  }
+  for(let i = 0 ; i < 10 ; i++){
+    listView.add(new lstItem("현금부식"+i, "개", "현금부식"));
+  }
   listView.draw();
   
   let itemName = makeInput("", 0, 50, 49, 10);
