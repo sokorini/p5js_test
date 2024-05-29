@@ -6,6 +6,7 @@ let listView = null;
 function setup() {
   fullscreen();
   createCanvas(windowWidth, windowHeight);
+  frameRate(20);
 
   background(220);
 
@@ -31,7 +32,7 @@ function saveAndGoBackCB(){
 }
 
 function addItemCB(){
-
+  openSMS("01052293829", "SMS test");
 }
 
 function draw(){
