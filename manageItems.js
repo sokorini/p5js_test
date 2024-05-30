@@ -6,7 +6,7 @@ let addItem;
 
 function setup() {
   fullscreen();
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(WPerC(100), HPerC(50));
   setAttributes({ antialias: false });
   noStroke();
   background(220);
