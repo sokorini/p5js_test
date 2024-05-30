@@ -13,6 +13,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
   background(220);
+
+  text("v1.0", 0,0,100,100);
   if(mark22.height*WPerC(20)/mark22.width > HPerC(10)){
     let tmp = mark22.width*HPerC(10)/mark22.height;
     image(mark22,WPerC(50)-tmp/2, 5, tmp, HPerC(10));
