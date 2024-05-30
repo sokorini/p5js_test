@@ -8,6 +8,7 @@ function preload() {
 function setup() {
   //console.log(Kakao.isInitialized());
   //loginWithKakao();
+  window.resizeTo(400, 400*windowHeight/windowWidth);
 
   fullscreen();
   createCanvas(windowWidth, windowHeight);
