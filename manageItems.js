@@ -6,7 +6,7 @@ let addItem;
 
 function setup() {
 
-  window.resizeTo(400, 400*windowHeight/windowWidth);
+  //window.resizeTo(400, 400*windowHeight/windowWidth);
   
   fullscreen();
   createCanvas(WPerC(100), HPerC(50));
