@@ -7,7 +7,7 @@ let addItem;
 function setup() {
   fullscreen();
   createCanvas(windowWidth, windowHeight);
-  setAttributes({ antialias: false })
+  setAttributes({ antialias: false });
   noStroke();
   background(220);
 
