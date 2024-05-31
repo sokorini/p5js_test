@@ -14,7 +14,7 @@ function setup() {
 
   background(220);
 
-  text("v1.2", 0,0,100,100);
+  text("v1.21", 0,0,100,100);
   
   if(mark22.height*WPerC(20)/mark22.width > HPerC(10)){
     let tmp = mark22.width*HPerC(10)/mark22.height;
