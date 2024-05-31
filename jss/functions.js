@@ -179,7 +179,7 @@ function openSMS(ph, str){
     window.open('sms://'+ph+'/;body='+str);
     return;
   }
-  window.location.href = "openSMS.html";
+  window.location.href = "openSMS.html?tmp='01052293829{div}testtttt'";
 }
   
 function copyStringToClipboard (str) {
