@@ -11,13 +11,13 @@ class Rectangle{
 }
 
 class lstItem{
-  constructor(name, unit, kind, idx){
+  constructor(name, unit, kind){
     this.show = name+' {x}'+unit;
     this.name = name;
     this.unit = unit;
     this.parent = null;
     this.kind = kind;
-    this.idx = idx;
+    this.idx = 0;
   }
 
   draw(){
@@ -133,6 +133,14 @@ class ListView{
     this.contentHeight = this.list.length * this.itemH;
     e.parent = this;
   }
+
+}
+
+function downloadFile(filePath){
+  var link = document.createElement('_a');
+  link.href = filePath;
+  link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
+  link.click();
 }
 
 function makeInput(str, x,y,w,h){
@@ -158,12 +166,20 @@ function HPerC(x){
 }
 
 function openSMS(ph, str){
-  if(navigator.userAgent.match(/Android/i)){
-    window.open('sms://'+ph+'/?body='+str);
+  try{
+    if(navigator.userAgent.match(/Android/i)){
+      window.open('sms://'+ph+'/?body='+str);
+      return;
+    }
+  } catch(err) {
+    window.location.href = "openSMS.html";
+    return;
   }
   if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)){ 
     window.open('sms://'+ph+'/;body='+str);
+    return;
   }
+  window.location.href = "openSMS.html";
 }
   
 function copyStringToClipboard (str) {
