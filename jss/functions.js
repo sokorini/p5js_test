@@ -168,11 +168,12 @@ function HPerC(x){
 function openSMS(ph, str){
   try{
     if(navigator.userAgent.match(/Android/i)){
-      window.open('sms://'+ph+'/?body='+str);
+      //window.open('sms://'+ph+'/?body='+str);
+      window.location.href = "openSMS.html?tmp='01052293829{div}testtttt'"";
       return;
     }
   } catch(err) {
-    window.location.href = "openSMS.html";
+    window.location.href = "openSMS.html?tmp='01052293829{div}testtttt'"";
     return;
   }
   if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)){ 
