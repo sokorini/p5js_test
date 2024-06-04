@@ -1,16 +1,9 @@
-form {
-    width: 400px;
-}
-@media only screen and (max-width: 400px) {
-    form {
-        width: 100%;
-    }
-}
+
 html, body {
     margin: 0;
     padding: 0;
-  }
-  canvas {
+}
+canvas {
     display: block;
-  }
+}
   

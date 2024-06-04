@@ -8,20 +8,21 @@ let itemName;
 let itemUnit;
 
 function setup() {
-
+  p5.disableFriendlyErrors = true;
 
   fullscreen();
-  createCanvas(WPerC(100), HPerC(50));
+  // createCanvas(WPerC(100), HPerC(50));
+  noCanvas();
   setAttributes({ antialias: false });
   noStroke();
   background(220);
 
   if(navigator.userAgent.match(/Android/i) && navigator.userAgent.indexOf("Chrome") == -1){
-    
+    text("If you are laggy, try using chrome browser.",5,5, 400, 40);
   }
-  text("If you are laggy, try using chrome browser or apk version",5,5, 400, 40);
-  let downloadApk = makeButton("get Apk", 80,0,20,5);
-  downloadApk.mousePressed(downloadApkCB);
+  
+  // let downloadApk = makeButton("get Apk", 80,0,20,5);
+  // downloadApk.mousePressed(downloadApkCB);
 
   let saveAndGoBack = makeButton("저장하고 돌아가기", 0, 90, 100, 10);
   saveAndGoBack.mousePressed(saveAndGoBackCB);
@@ -29,18 +30,12 @@ function setup() {
   addItem = makeButton("추가하기", 0, 61, 100, 10);
   addItem.mousePressed(addItemCB);
 
-  listView = new ListView(0, HPerC(10), WPerC(100), HPerC(40));
-  // for(let i = 0 ; i < 10 ; i++){
-  //   listView.add(new lstItem("원재료"+i, "개", "원재료"));
-  // }
-  // for(let i = 0 ; i < 10 ; i++){
-  //   listView.add(new lstItem("비품"+i, "개", "비품"));
-  // }
-  // for(let i = 0 ; i < 10 ; i++){
-  //   listView.add(new lstItem("현금부식"+i, "개", "현금부식"));
-  // }
+
+
   
-  listView.draw();
+  // listView = new ListView(0, HPerC(10), WPerC(100), HPerC(40));  
+  listView = new ListView("listview1", 0, HPerC(10), WPerC(100), HPerC(40));
+  // listView.draw();
   
   
   itemName = makeInput("", 0, 50, 49, 10);
@@ -76,6 +71,6 @@ function itemTypeCB(){
   itemType.html(typeStr[itemTypeI]);
 }
 
-function draw(){
-  listView.update();
-}
+// function draw(){
+//   listView.update();
+// }
