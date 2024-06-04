@@ -1,10 +1,9 @@
 
 
 function setup(){
-    window.resizeTo(window.parent.innerWidth/10, windowHeight);
     window.addEventListener('message', makeButtonList, false);
     for(let i = 0 ; i < 10 ; i++){
-        let btn = makeButton("btn"+i, 0, 40*i, windowWidth, 40);
+        let btn = makeButton("btn"+i, 0, 40*i, windowWidth/4, 40);
     }
 }
 
