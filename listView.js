@@ -3,7 +3,7 @@
 function setup(){
     window.addEventListener('message', makeButtonList, false);
     for(let i = 0 ; i < 10 ; i++){
-        let btn = makeButton("btn"+i, 0, 40*i, 100, 10);
+        let btn = makeButton("btn"+i, 0, 10*i, 100, 10);
     }
 }
 
