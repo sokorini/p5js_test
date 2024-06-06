@@ -48,119 +48,51 @@ class lstItem{
             id="testFrame" 
             style="position:relative;top:10px"></iframe>
 */
+function rectHTML(x,y,w,h){
+  return 'width:'+w+'px; height:'+h+'px; position:relative; left:'+x+'px; top:'+y+'px;';
+}
+
 class ListView{
-  constructor(name, x, y, w, h){
-    let tmp = document.createElement('div');
-    tmp.innerHTML = '<iframe src="listView.html" width="'+w+'px" height="'+h+'px" frameBorder="0" scrolling="yes" id="'+name+'" style="position:relative; top:'+y+'px; left:'+x+'"></iframe>';
-    document.querySelector('.body').append(tmp);
-    let inWin = document.getElementById(name);
-    inWin.contentWindow.resizeTo(w, windowHeight);
+
+  constructor(name, lst, x, y, w, h){
+
+    this.div = document.createElement('div');
+    this.div.setAttribute('style', 'overflow-y:auto; overflow-x:hidden; '+rectHTML(x,y,w,h));
+    
+    this.name = name;
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.itemH = this.h/5;
+    listViewList.push(this);
+    this.setList(lst);
   }
 
+  setList(lst){
+    let html = '';
+    for(let i = 0 ; i < lst.length ; i++){
+      let locali = i; 
+      html += '<button onClick="listViewCB(\''+this.name+'\','+locali+')"'+
+              ' style="'+rectHTML(0, 0, this.w, this.itemH)+'">'+
+              lst[i]+'</button>';
+    }
+
+    // console.log(html);
+
+    this.div.innerHTML = html;
+    document.querySelector('.body').append(this.div);
+
+  }
 
 }
 
-function sendMessageTo(win, tag, msg){
-  win.parent.postMessage(tag+'/-/'+msg, "*");
+let listViewList = [];
+
+function listViewCB(name, idx){
+  console.log('selected'+idx );
 }
 
-// class ListView{
-//   constructor(x, y, w, h){
-//     this.x = x; this.y = y; this.w = w; this.h = h;
-//     this.itemH = 50;
-//     this.color = 100;
-//     this.list = [];
-//     this.neverscrolled = true;
-//     this.scroll = 0;
-//     this.scrollSpd = 0;
-//     this.startScroll = false;
-//     this.pmouseIsPressed = false;
-//     this.contentHeight = 0;
-//     this.clickOutside = false;
-//     this.callback = (ele, idx)=>{};
-//     this.focus = -1;
-//   }
-
-//   draw(){
-//     push();
-//     fill(this.color);
-//     rect(this.x,this.y,this.w,this.h);
-//     clip(()=>{rect(this.x,this.y,this.w,this.h);})
-//     this.list.forEach((e, i)=>{
-//       e.draw(i);
-//     });
-//     pop();
-//   }
-
-//   rect(){
-//     return new Rectangle(this.x, this.y, this. w, this.h);
-//   }
-
-//   listSelected(func){
-//     this.callback = func;
-//   }
-
-//   update(){
-//     if(mouseIsPressed){
-//       if(!this.rect().containsPoint(mouseX, mouseY) && !this.startScroll){
-//         this.clickOutside = true;
-//       }
-//       if(this.rect().containsPoint(mouseX, mouseY) &&
-//           this.rect().containsPoint(pmouseX, pmouseY) && !this.clickOutside){
-//         if(mouseY-pmouseY != 0){
-//           this.startScroll = true;
-//           this.neverscrolled = false;
-//         }
-//       }
-//       if(this.startScroll){ 
-//         this.scrollSpd = mouseY-pmouseY;
-//         this.scroll += this.scrollSpd;
-//       }
-      
-//     }else{
-//       this.clickOutside = false;
-//       this.startScroll = 0;
-//       if(this.scrollSpd > 0){
-//         this.scrollSpd = this.scrollSpd-HPerC(0.1);
-//       }else if(this.scrollSpd < 0){
-//         this.scrollSpd = this.scrollSpd+HPerC(0.1);
-//       }
-//       if(this.scrollSpd < HPerC(0.1) && this.scrollSpd > -HPerC(0.1)){ this.scrollSpd = 0; }
-//       this.scroll += this.scrollSpd;
-//       if(this.scroll < this.h - this.contentHeight){
-//         this.scroll = this.h - this.contentHeight;
-//       }
-//       if(this.scroll > 0) { 
-//         this.scroll = 0; 
-//       }
-      
-//       if(this.neverscrolled){
-//         if(this.pmouseIsPressed){ 
-//           this.list.forEach((e, i)=>{
-//             if(e.rect().containsPoint(mouseX, mouseY)){
-//               this.callback(e, i);
-//               this.focus = i;
-//               console.log(i);
-//             }
-//           });
-//           this.listSelected(); 
-//         }
-//       }else{
-//         this.neverscrolled = true;
-//       }
-//     }
-//     this.pmouseIsPressed = mouseIsPressed;
-//     listView.draw();
-//   }
-
-//   add(e){
-//     e.idx = this.list.length;
-//     this.list.push(e);
-//     this.contentHeight = this.list.length * this.itemH;
-//     e.parent = this;
-//   }
-
-// }
 
 function downloadFileAt(filePath){
   var link = document.createElement('_a');

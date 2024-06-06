@@ -34,7 +34,7 @@ function setup() {
 
   
   // listView = new ListView(0, HPerC(10), WPerC(100), HPerC(40));  
-  listView = new ListView("listview1", 0, HPerC(10), WPerC(100), HPerC(40));
+  listView = new ListView("listview1", ["green onion","asdf","garlic","holy", "hehe","hoho", "test1"], 0, HPerC(10), WPerC(100), HPerC(40));
   // listView.draw();
   
   
