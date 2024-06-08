@@ -15,27 +15,21 @@ class lstItem{
     this.show = name+' {x}'+unit;
     this.name = name;
     this.unit = unit;
-    this.parent = null;
     this.kind = kind;
-    this.idx = 0;
   }
 
-  draw(){
-    if(this.kind === "원재료") fill(150, 255, 150);
-    if(this.kind === "비품") fill(255, 150, 150);
-    if(this.kind === "현금부식") fill(150, 150, 255);
-    let tmp = this.parent.y + this.parent.itemH*this.idx + this.parent.scroll;
-    rect(this.parent.x, tmp, this.parent.w, this.parent.itemH);
-    textSize(this.parent.itemH/2);
-    textAlign(LEFT, CENTER);
-    fill(0);
-    text(this.show, this.parent.x+5, tmp, this.parent.w-5, this.parent.itemH);
+  toString(){
+    return this.show;
   }
 
-  rect(){
-    let tmp = this.parent.y + this.parent.itemH*this.idx + this.parent.scroll;
-    return new Rectangle(this.parent.x, tmp, this.parent.w, this.parent.itemH);
-  }
+}
+
+function lstItemList(objList){
+  let ret = [];
+  objList.forEach((e,i) => {
+    ret.push(new lstItem(e.name, e.unit, e.kind));
+  });
+  return ret;
 }
 
 
@@ -64,33 +58,57 @@ class ListView{
     this.y = y;
     this.w = w;
     this.h = h;
+    this.list = lst;
     this.itemH = this.h/5;
+    this.func = (str,i)=>{console.log("selected "+i+" : "+str);}
     listViewList.push(this);
-    this.setList(lst);
+    this.setList();
   }
 
   setList(lst){
-    let html = '';
-    for(let i = 0 ; i < lst.length ; i++){
-      let locali = i; 
-      html += '<button onClick="listViewCB(\''+this.name+'\','+locali+')"'+
-              ' style="'+rectHTML(0, 0, this.w, this.itemH)+'">'+
-              lst[i]+'</button>';
+    if(lst != null){
+      this.list = lst;
     }
 
-    // console.log(html);
-
+    let html = '';
+    for(let i = 0 ; i < this.list.length ; i++){
+      let locali = i;
+      html += '<button onClick="listViewCB(\''+this.name+'\','+locali+')"'+
+              ' style="'+rectHTML(0, 0, this.w, this.itemH)+'">'+
+              this.list[i].toString()+'</button>';
+    }
     this.div.innerHTML = html;
     document.querySelector('.body').append(this.div);
 
   }
 
+  add(e){
+    this.list.push(e);
+    this.setList();
+  }
+
+  onSelected(f){
+    this.func = f;
+  }
+
+  hide(){
+    this.div.style.display = 'none';
+  }
+
+  show(){
+    this.div.style.display = 'block';
+  }
 }
 
 let listViewList = [];
 
 function listViewCB(name, idx){
-  console.log('selected'+idx );
+  for(let i = 0 ; i < listViewList.length ; i++){
+    if(name === listViewList[i].name){
+      let tmp = listViewList[i];
+      tmp.func(tmp.list[idx], idx);
+    }
+  }
 }
 
 

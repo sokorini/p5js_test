@@ -14,7 +14,7 @@ function setup() {
 
   background(220);
 
-  text("v1.4", 0,0,100,100);
+  text("v1.5", 0,0,100,100);
   
   if(mark22.height*WPerC(20)/mark22.width > HPerC(10)){
     let tmp = mark22.width*HPerC(10)/mark22.height;
@@ -42,5 +42,7 @@ function manageItemsCB(){
 }
 
 function sendItemListCB(){
-  openSMS("01052293829","SMS test");
+  //openSMS("01052293829","SMS test");
+  storeItem("test1",100);
+  console.log("set test1 to 100");
 }
