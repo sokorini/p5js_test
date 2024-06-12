@@ -11,11 +11,31 @@ class Rectangle{
 }
 
 class lstItem{
-  constructor(name, unit, kind){
-    this.show = name+' {x}'+unit;
+  constructor(name, unit, kind, ent){
     this.name = name;
     this.unit = unit;
     this.kind = kind;
+    this.entity = ent;
+    if(ent == null){this.entity = 0;}
+    this.update();
+  }
+
+  copy(){
+    let a = new lstItem(this.name, this.unit, this.kind, this.entity);
+    return a;
+  }
+
+  update(){
+    if(this.entity == 0){
+      this.show = this.name+' {x}'+this.unit;
+    }else{
+      this.show = this.name+' '+this.entity+this.unit;
+    }
+  }
+
+  addEntity(){
+    this.entity++;
+    this.update();
   }
 
   toString(){
@@ -24,24 +44,35 @@ class lstItem{
 
 }
 
-function lstItemList(objList){
-  let ret = [];
-  objList.forEach((e,i) => {
-    ret.push(new lstItem(e.name, e.unit, e.kind));
+function rplcFUNC(form, key, v){
+  let ret = form;
+  if(form.indexOf(key) != -1){
+    ret = form.replaceAll(key, v[key]);
+  }
+  return ret;
+}
+
+function replaceForm(form, v){
+  let ret = form;
+  Object.keys(v).forEach((e,i)=>{
+    ret = rplcFUNC(ret, e, v);
   });
   return ret;
 }
 
+function initializeLocalSave(tag, val){
+  let tmp = getItem(tag);
+  if(tmp == null){storeItem(tag, val);}
+}
 
-/*
-    <iframe src="listView.html" 
-            width="px" 
-            height="180px" 
-            frameBorder="0" 
-            scrolling="yes" 
-            id="testFrame" 
-            style="position:relative;top:10px"></iframe>
-*/
+function lstItemList(objList){
+  let ret = [];
+  objList.forEach((e,i) => {
+    ret.push(new lstItem(e.name, e.unit, e.kind, e.entity));
+  });
+  return ret;
+}
+
 function rectHTML(x,y,w,h){
   return 'width:'+w+'px; height:'+h+'px; position:relative; left:'+x+'px; top:'+y+'px;';
 }
@@ -52,7 +83,8 @@ class ListView{
 
     this.div = document.createElement('div');
     this.div.setAttribute('style', 'overflow-y:auto; overflow-x:hidden; '+rectHTML(x,y,w,h));
-    
+    this.div.style.backgroundColor = '#505050';
+
     this.name = name;
     this.x = x;
     this.y = y;
@@ -60,9 +92,10 @@ class ListView{
     this.h = h;
     this.list = lst;
     this.itemH = this.h/5;
-    this.func = (str,i)=>{console.log("selected "+i+" : "+str);}
+    this.func = (ele,i)=>{console.log("selected "+i+" : "+ele);}
     listViewList.push(this);
     this.setList();
+    document.querySelector('.body').append(this.div);
   }
 
   setList(lst){
@@ -78,8 +111,7 @@ class ListView{
               this.list[i].toString()+'</button>';
     }
     this.div.innerHTML = html;
-    document.querySelector('.body').append(this.div);
-
+    
   }
 
   add(e){
@@ -145,11 +177,12 @@ function openSMS(ph, str){
   if(navigator.userAgent.match(/Android/i)){
     window.open('sms://'+ph+'/?body='+str);
     return;
-  } 
-  if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)){ 
+  } else if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)){ 
     window.open('sms://'+ph+'/;body='+str);
     return;
-  } 
+  } else {
+    console.log('ph : '+ph+'\ntext : '+str)
+  }
 }
   
 function copyStringToClipboard (str) {

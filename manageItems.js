@@ -6,48 +6,28 @@ let addItem;
 let itemType;
 let itemName;
 let itemUnit;
-let listlist = [[],[],[]];
+let listlist = [];
+let itemTypeI = 0;
+let typeStr;
 
 function setup() {
-  p5.disableFriendlyErrors = true;
 
-  fullscreen();
-  // createCanvas(WPerC(100), HPerC(50));
-  noCanvas();
-  setAttributes({ antialias: false });
-  noStroke();
-  background(220);
+  typeStr = getItem('typeStr');
 
-  if(navigator.userAgent.match(/Android/i) && navigator.userAgent.indexOf("Chrome") == -1){
-    text("If you are laggy, try using chrome browser.",5,5, 400, 40);
+  for(let i = 0 ; i < typeStr.length ; i++){
+      listlist.push(lstItemList(getItem(typeStr[i]+'List')));
   }
-  
-  // let downloadApk = makeButton("get Apk", 80,0,20,5);
-  // downloadApk.mousePressed(downloadApkCB);
 
   let saveAndGoBack = makeButton("저장하고 돌아가기", 0, 90, 100, 10);
   saveAndGoBack.mousePressed(saveAndGoBackCB);
 
-  addItem = makeButton("추가하기", 73, 50, 27, 10);
+  addItem = makeButton("추가하기", 73, 52, 27, 10);
   addItem.mousePressed(addItemCB);
   
-  // if([] != null){console.log('aaaaa');}
-
-  listlist[0] = lstItemList(getItem('wonList'));
-  listlist[1] = lstItemList(getItem('bipList'));
-  listlist[2] = lstItemList(getItem('hyuList'));
-
-  for(let i = 0 ; i < 3 ; i++){
-    if(listlist[i] == null){
-      listlist[i] = [];
-    }else{
-      console.log(listlist[i]);
-    }
-  }
 
   
   listView = new ListView("listview1", listlist[0], 
-                          0, HPerC(10), WPerC(100), HPerC(40));
+                          0, 0, WPerC(100), HPerC(40));
   listView.onSelected((str,i)=>{
     if(window.confirm('"'+str+'" 을(를) 삭제하시겠습니까?')){
       let l = [];
@@ -60,10 +40,10 @@ function setup() {
   });
   
   
-  itemName = makeInput("", 0, 50, 49, 10);
+  itemName = makeInput("", 0, 52, 49, 10);
   itemName.style('font-size', 20+'px');
   
-  itemUnit = makeInput("", 51, 50, 20, 10);
+  itemUnit = makeInput("", 51, 52, 20, 10);
   itemUnit.style('font-size', 20+'px');
 
   itemType = makeButton("눌러서 변경 : "+"원재료",0, 0, 100, 9);
@@ -72,14 +52,13 @@ function setup() {
 
 
 function saveAndGoBackCB(){
-  storeItem('wonList', listlist[0]);
-  storeItem('bipList', listlist[1]);
-  storeItem('hyuList', listlist[2]);
+  for(let i = 0 ; i < typeStr.length ; i++){
+    storeItem(typeStr[i]+'List', listlist[i]);
+  }
   window.history.back();
 }
 
-let itemTypeI = 0;
-let typeStr = ["원재료","비품","현금부식"];
+
 
 function addItemCB(){
   let tmp = new lstItem(itemName.value(), itemUnit.value(), typeStr[itemTypeI]);
@@ -91,7 +70,7 @@ function addItemCB(){
 }
 
 function itemTypeCB(){ 
-  itemTypeI = (itemTypeI+1)%3;
+  itemTypeI = (itemTypeI+1)%typeStr.length;
   itemType.html("눌러서 변경 : "+typeStr[itemTypeI]);
 
   listView.setList(listlist[itemTypeI]);

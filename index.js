@@ -9,12 +9,14 @@ function setup() {
   //console.log(Kakao.isInitialized());
   //loginWithKakao();
 
+  initLocalSaves();
+
   fullscreen();
   createCanvas(windowWidth, windowHeight);
 
   background(220);
 
-  text("v1.5", 0,0,100,100);
+  text("v1.6", 0,0,100,100);
   
   if(mark22.height*WPerC(20)/mark22.width > HPerC(10)){
     let tmp = mark22.width*HPerC(10)/mark22.height;
@@ -22,6 +24,7 @@ function setup() {
   }else{
     image(mark22,WPerC(40), 5, WPerC(20), mark22.height*WPerC(20)/mark22.width);
   }
+
   textSize(HPerC(5));
   textAlign(CENTER, CENTER);
   text("용촌", WPerC(20), 5, WPerC(20), HPerC(10));
@@ -43,6 +46,21 @@ function manageItemsCB(){
 
 function sendItemListCB(){
   //openSMS("01052293829","SMS test");
-  storeItem("test1",100);
-  console.log("set test1 to 100");
+  window.location.href = "makeItemList.html";
+}
+
+
+function initLocalSaves(){
+  // item types
+  initializeLocalSave('typeStr', ["원재료","비품","현금부식"]);
+  
+  let typeStr = getItem('typeStr');
+  for(let i = 0 ; i < typeStr.length ; i++){
+    initializeLocalSave(typeStr[i]+'List', []);
+  }
+  for(let i = 0 ; i < typeStr.length ; i++){
+    initializeLocalSave(typeStr[i]+'Table', []);
+  }
+
+  initializeLocalSave('balju form', "\n({tag})\n\n{items}\n");
 }
