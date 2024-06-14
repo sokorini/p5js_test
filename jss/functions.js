@@ -175,11 +175,9 @@ function HPerC(x){
 
 function openSMS(ph, str){ 
   if(navigator.userAgent.match(/Android/i)){
-    window.open('sms://'+ph+'/?body='+str);
-    return;
+    window.open('sms://'+ph+'/?body='+encodeURI(str));
   } else if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)){ 
-    window.open('sms://'+ph+'/;body='+str);
-    return;
+    window.open('sms://'+ph+'/;body='+encodeURI(str));
   } else {
     console.log('ph : '+ph+'\ntext : '+str)
   }

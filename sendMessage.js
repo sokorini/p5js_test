@@ -8,9 +8,9 @@ let sms;
 
 function setup(){
 
-    Kakao.init('b51bfef3753534fcfa367493f328e390'); // 사용하려는 앱의 JavaScript 키 입력
+    //Kakao.init('b51bfef3753534fcfa367493f328e390'); // 사용하려는 앱의 JavaScript 키 입력
 
-    console.log(Kakao.isInitialized());
+    // console.log(Kakao.isInitialized());
 
     noCanvas();
     typeStr = getItem('typeStr');
@@ -48,13 +48,13 @@ function setup(){
     let ph = getItem('sms ph');
 
     let cpy = makeButton("클립보드에 복사하기", 1, 80, 32, 10);
-    sms = makeButton("SMS 문자 전송 : 없음", 34, 80, 32, 10);
-    let kko = makeButton("카카오톡에 공유", 67, 80, 32, 10);
+    sms = makeButton("SMS 문자 전송\n없음", 34, 80, 32, 10);
+    let shr = makeButton("공유하기", 67, 80, 32, 10);
     cpy.mousePressed(cpyCB);
     sms.mousePressed(smsCB);
-    kko.mousePressed(kkoCB);
+    shr.mousePressed(shareCB);
     if(ph != null){
-        sms.html("SMS 문자 전송 : "+ph);
+        sms.html("SMS 문자 전송\n"+ph);
     }
 }
 
@@ -69,7 +69,7 @@ function smsCB(){
         ph = prompt('지정된 전화번호가 없습니다.\n전화번호를 입력해주세요.', '');
         if (ph != null){
             storeItem('sms ph', ph);
-            sms.html("SMS 문자 전송 : "+ph);
+            sms.html("SMS 문자 전송\n"+ph);
         }
         storeItem('sms ph', ph);
     }
@@ -85,12 +85,15 @@ function smsCB(){
             
             if (ph != null){
                 storeItem('sms ph', ph);
-                sms.html("SMS 문자 전송 : "+ph);
+                sms.html("SMS 문자 전송\n"+ph);
             }
         }
     }
 }
 
-function kkoCB(){
-    
+function shareCB(){
+    let textarea = document.getElementById('txtArea');
+    navigator.share({
+        text: textarea.value
+    });
 }
